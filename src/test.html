@@ -31,7 +31,7 @@
             // create temporary link  
             let tmpLink = document.createElement('a');
             tmpLink.download = 'image.png';     // set the name of the download file 
-            tmpLink.href = canvas.toDataURL();  // get canvas data  
+            tmpLink.href = canvas.toDataURL("png", 1.0);  // set the link to the data URL
 
             // temporarily add link to body and initiate the download  
             document.body.appendChild(tmpLink);
