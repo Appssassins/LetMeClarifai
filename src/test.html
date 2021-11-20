@@ -2,13 +2,13 @@
 <html lang="en">
     <head>
  
-        <title>First canvas page</title>
-        <meta charset="utf-8">
+        <title>First canvas page</title>    
+        <meta charset="utf-8">             
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     
-    </head>
-    <body>
+    </head>                     //Once we have a standard MVC framework, we can remove this
+    <body>                      //And put it in the Bootstap folder.
 		<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
     
@@ -20,48 +20,45 @@
 
     <button onclick="displayImage()">Display Image</button>
     <button onclick="clearCanvas()">Clear Canvas</button> 
-    <button onclick="download()">Download</button> 
+    <button id="download">Download</button> 
 
-    <script>
+    <script>                                            //We need to create seperate JS files for organizing our code.
         var canvas = document.getElementById("myCanvas");
-        var ctx = canvas.getContext('2d');
-        var img = new Image();
+        var ctx = canvas.getContext('2d');              //CtX is the context, How we draw on the canvas.
+        const download = document.getElementById('download');
+        var img = new Image();                          //Image lets us hold and manipulate images.
 
-        function download() {
-            // create temporary link  
-            let tmpLink = document.createElement('a');
-            tmpLink.download = 'image.png';     // set the name of the download file 
-            tmpLink.href = canvas.toDataURL("png", 1.0);  // set the link to the data URL
-
-            // temporarily add link to body and initiate the download  
-            document.body.appendChild(tmpLink);
-            tmpLink.click();
-            document.body.removeChild(tmpLink);
-        }
+        download.addEventListener('click', function(e) {//This oddly only works before any images are drawn.
+            const link = document.createElement('a');   // create temporary link
+            link.download = 'image.png';                // set the name of the download file 
+            link.href = canvas.toDataURL();             // set the link to the data URL
+            link.click();                               // click the link
+            link.delete;                                // delete the link
+        });
         
         function clearCanvas() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
 
-        function displayImage() {
+        function displayImage() {           // Be able to load any image from the internet that a user wants.
             img.src = 'example.png';
             img.addEventListener('load', function () {
                 ctx.drawImage(img, 0, 0);
             }, false);
         }
 
-        var radius = 50;
-        var nStartX = 0;
-        var nStartY = 0;
+        var radius = 10;    // Standardize this so we can have hundreds of draw functions.
+        var nStartX = 0;    // Three functions as a set for each brush.
+        var nStartY = 0;    // putPoint(), drawPoint(), and stopPoint().
         var bIsDrawing = false;
 
-        var putPoint = function(e){
+        var putPoint = function(e){ // e is the event. e.clientX and e.clientY are the coordinates of the mouse.
             nStartX = e.clientX;
             nStartY = e.clientY;
             bIsDrawing = true;
         }
 
-        var drawPoint = function(e){
+        var drawPoint = function(e){  // This draws circles.
             if(!bIsDrawing)
                 return;
             var nDeltaX = nStartX - e.clientX;
@@ -76,7 +73,7 @@
             bIsDrawing = false;
         }
 
-        canvas.addEventListener('mousedown',putPoint);
+        canvas.addEventListener('mousedown',putPoint); 
         canvas.addEventListener('mousemove',drawPoint);
         canvas.addEventListener('mouseup',stopPoint);
 
