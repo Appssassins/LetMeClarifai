@@ -7,7 +7,7 @@ var stopPoint = function(e){
     bIsDrawing = false;
     RecordHistory();
 }
-var drawPoint = function(choice, e){
+var drawPointChoice = function(choice, e){
     switch(choice){
         case 'Pen':
             drawPointPen(e);
