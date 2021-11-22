@@ -2,7 +2,7 @@ function clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-function displayImage() {           // Create a popup window to ask for user copy paste link
+function displayImage() {           // TODO: Create a popup window to ask for user copy paste link
     img.src = 'example.png';
     img.addEventListener('load', function () {
         ctx.drawImage(img, 0, 0);
@@ -26,10 +26,10 @@ function Undo() {
 }
 function RecordHistory() {
     history.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
-    memory = history.length;
+    memory = history.length - 1;
 }
 function Redo() {
-    if (history.length > 0 && memory < history.length) {
+    if (history.length > 0 && memory < history.length - 1 && memory >= 0) {
         history.pop();
         clearCanvas();
         ctx.putImageData(history[memory++], 0, 0);
