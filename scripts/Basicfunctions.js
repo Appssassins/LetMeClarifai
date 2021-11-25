@@ -17,22 +17,23 @@ download.addEventListener('click', function(e) {//This oddly only works before a
     link.delete;                                // delete the link
 });
 
-function Undo() {
-    if (history.length > 0 && memory > 0) {
-        history.pop();
-        clearCanvas();
-        ctx.putImageData(history[memory--], 0, 0);
-    }
-}
+
 function RecordHistory() {
     history.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
     memory = history.length - 1;
 }
+function Undo() {
+    if (history.length > 0 && memory > 0) {
+        history.pop();
+        clearCanvas();
+        ctx.putImageData(history[memory--], 0, 0);   
+}}
 function Redo() {
     if (history.length > 0 && memory < history.length - 1 && memory >= 0) {
         history.pop();
         clearCanvas();
-        ctx.putImageData(history[memory++], 0, 0);
-    }
-}
+        ctx.putImageData(history[memory++], 0, 0); 
+}}
+
+export { clearCanvas, displayImage, RecordHistory, Undo, Redo };
 

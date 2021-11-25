@@ -25,17 +25,19 @@ var drawPointChoice = function(choice, e){
         case 'Eraser':
             return drawWithEraser(e);
         case 'Circle':
-            return buildACircle(e);
+            return makeACircle(e);
         case 'Heart':
-            return buildAHeart(e);
+            return makeAHeart(e);
         case 'Line':
-            return buildALine(e);
+            return makeALine(e);
         case 'Rectangle':
-            return buildARectangle(e);
+            return makeARectangle(e);
         case 'Triangle':
-            return buildATriangle(e);
+            return makeATriangle(e);
         case 'Square':
-            return buildASquare(e);
+            return makeASquare(e);
+        default:
+            return;
     }
 }
 var setOptions = function(){
@@ -67,7 +69,7 @@ var drawWithEraser = function(e){
     ctx.fill();
     ctx.globalCompositeOperation = 'source-over';
 }
-var buildACircle = function(e){  // This draws circles.
+var makeACircle = function(e){  // This draws circles.
     if(!bIsDrawing){return;}
     setOptions();
 
@@ -79,7 +81,7 @@ var buildACircle = function(e){  // This draws circles.
     ctx.arc(nStartX, nStartY, radius, 0, Math.PI*2);
     ctx.fill();
 }
-var buildAHeart = function(e){  // This draws hearts.
+var makeAHeart = function(e){  // This draws hearts.
     if(!bIsDrawing){return;}
     setOptions();
 
@@ -93,7 +95,7 @@ var buildAHeart = function(e){  // This draws hearts.
     ctx.bezierCurveTo(nStartX - radius, nStartY - radius, nStartX - radius, nStartY, nStartX, nStartY);
     ctx.fill();
 }
-var buildALine = function(e){        // This draws lines.
+var makeALine = function(e){        // This draws lines.
     if(!bIsDrawing){return;}
     setOptions();
 
@@ -102,7 +104,7 @@ var buildALine = function(e){        // This draws lines.
     ctx.lineTo(e.clientX, e.clientY);
     ctx.stroke();
 }
-var buildARectangle = function(e){   // This draws rectangles.
+var makeARectangle = function(e){   // This draws rectangles.
     if(!bIsDrawing){return;}
     setOptions();
 
@@ -110,7 +112,7 @@ var buildARectangle = function(e){   // This draws rectangles.
     ctx.rect(nStartX, nStartY, e.clientX - nStartX, e.clientY - nStartY);
     ctx.fill();
 }
-var buildATriangle = function(e){    // This draws triangles.
+var makeATriangle = function(e){    // This draws triangles.
     if(!bIsDrawing){return;}
     setOptions();
 
@@ -121,7 +123,7 @@ var buildATriangle = function(e){    // This draws triangles.
     ctx.lineTo(nStartX, nStartY);       //click point again
     ctx.fill();
 }
-var buildASquare = function(e){      // This draws squares.
+var makeASquare = function(e){      // This draws squares.
     if(!bIsDrawing){return;}
     setOptions();
 
@@ -133,5 +135,8 @@ var buildASquare = function(e){      // This draws squares.
     ctx.lineTo(nStartX, nStartY);       //click point again
     ctx.fill();
 }
+
+export default {putPoint, stopPoint, drawPointChoice};
+
 
 
